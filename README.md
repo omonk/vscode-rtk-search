@@ -26,7 +26,11 @@ Running the command on a hook definition will add the endpoint name to the searc
 
 If nothing can found you'll see a message pop up telling you.
 
+## Finding an endpoint
 
+![2024-06-17 09 10 12](https://github.com/omonk/vscode-rtk-search/assets/7108120/1be408f2-1df0-4c63-a29f-7e35c0ec4e73)
 
+## Error message
 
+![2024-06-17 09 10 27](https://github.com/omonk/vscode-rtk-search/assets/7108120/f9e6fb88-f17c-46f7-b570-791552848661)
 
