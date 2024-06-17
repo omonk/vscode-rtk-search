@@ -10,8 +10,20 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      const setSelectionTo = (selection: vscode.Selection) => {
+        editor.selection = selection;
+      };
+
+      let originalSelection: vscode.Selection;
+
       const runSearch = async (count = 0): Promise<unknown> => {
+        console.log("Run search");
         const document = editor.document;
+
+        if (originalSelection == null) {
+          originalSelection = editor.selection;
+        }
+
         await vscode.commands.executeCommand(
           "editor.action.smartSelect.expand"
         );
@@ -24,6 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (match != null) {
           const [, , hookName] = match;
 
+          setSelectionTo(originalSelection);
           return vscode.commands.executeCommand("editor.actions.findWithArgs", {
             searchString: hookName,
             isCaseSensitive: false,
@@ -31,11 +44,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         if (count < 3) {
-          return runSearch(count++);
+          // If it can't find the hook then run it again, causing the expansion to expand
+          return runSearch(count + 1);
         } else {
+          setSelectionTo(originalSelection);
           return vscode.window.showErrorMessage("Can't find the hook, sorry");
         }
       };
+
       await runSearch();
     }
   );

@@ -3,6 +3,10 @@
   "displayName": "rtk-hook-search",
   "description": "Find the endpoint definition from the RTK hook",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omonk/vscode-rtk-search"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
