@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
           return runSearch(count + 1);
         } else {
           setSelectionTo(originalSelection);
-          return vscode.window.showErrorMessage("Can't find the hook, sorry");
+          return showNotification("Can't find the hook, sorry", 2000);
         }
       };
 
@@ -56,6 +56,24 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  function showNotification(message: string, duration: number) {
+    vscode.window.withProgress(
+      { location: vscode.ProgressLocation.Notification },
+      async progress => {
+        const steps = 100;
+        const delay = duration / steps;
+
+        for (let i = 0; i <= steps; i++) {
+          await new Promise<void>(resolve => {
+            setTimeout(() => {
+              progress.report({ increment: 1, message: message });
+              resolve();
+            }, delay);
+          });
+        }
+      }
+    );
+  }
   context.subscriptions.push(disposable);
 }
 
